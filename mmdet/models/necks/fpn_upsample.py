@@ -142,7 +142,7 @@ class FPN_UPSAMPLE(BaseModule):
             self.lateral_convs.append(l_conv)
             self.fpn_convs.append(fpn_conv)
             if i != self.backbone_end_level - 1:
-                self.upsample_modules.append(build_upsampler(upsample_cfg, in_channels=out_channels, scale_factor=2))
+                self.upsample_modules.append(build_upsampler(self.upsample_cfg, in_channels=out_channels, scale_factor=2))
 
         # add extra conv layers (e.g., RetinaNet)
         extra_levels = num_outs - self.backbone_end_level + self.start_level
@@ -163,7 +163,7 @@ class FPN_UPSAMPLE(BaseModule):
                     act_cfg=act_cfg,
                     inplace=False)
                 self.fpn_convs.append(extra_fpn_conv)
-                self.upsample_modules.append(build_upsampler(upsample_cfg, in_channels=out_channels, scale_factor=2))
+                self.upsample_modules.append(build_upsampler(self.upsample_cfg, in_channels=out_channels, scale_factor=2))
 
     def forward(self, inputs: Tuple[Tensor]) -> tuple:
         """Forward function.
